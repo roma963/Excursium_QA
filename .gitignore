@@ -1,0 +1,6 @@
+.venv/
+__pycache__/
+*.pyclbr
+.idea/
+DS_Store
+.env
