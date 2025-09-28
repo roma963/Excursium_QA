@@ -1,21 +1,14 @@
-import pytest
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
-@pytest.fixture
-def driver():
-    """Создаём и закрываем браузер для каждого теста"""
-    service = Service(ChromeDriverManager().install())
-    driver = webdriver.Chrome(service=service)
-    yield driver
-    driver.quit()
+def test_dummy():
+    assert True
+def test_open_main_page(user_credentials):
+    assert "http" in user_credentials["base_url"]
 
-def test_open_example(driver):
-    driver.get("http://www.example.com")
-    assert "Example Domain" in driver.title
+def test_open_site_title(driver, user_credentials):
+    driver.get(user_credentials["base_url"])
+    WebDriverWait(driver, 10).until(lambda d: d.title != "")
+    assert "ЭкскурсиУм" in driver.title
 
-def test_h1_example(driver):
-    driver.get("http://www.example.com")
-    h1 = driver.find_element("tag name","h1")
-    assert "Example Domain" in h1.text
